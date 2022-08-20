@@ -1,3 +1,17 @@
 *{
   margin: 1rem;
 }
+
+.btn {
+  padding: 0.2rem 1rem ;
+  border-radius: 12px;
+  border: none;
+  background: rgb(96,207,220);
+  background: linear-gradient(90deg, rgba(96,207,220,1) 0%, rgba(190,52,218,1) 92%);
+  color: #fff;
+  font-size: 1.2rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  transition: all 0.3s ease-in-out;
+  cursor: pointer;
+}
