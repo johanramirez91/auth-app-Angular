@@ -22,7 +22,6 @@ export class LoginComponent {
   ) {}
 
   login() {
-    console.log(this.formulario.value);
     const { email, password } = this.formulario.value;
     this.authService.login(email, password).subscribe((resp) => {
       if (resp === true) {
