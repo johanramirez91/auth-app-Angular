@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, map, of, tap } from 'rxjs';
+import { catchError, map, of, tap, Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { AuthResponse, User } from '../interfaces/interface';
 
@@ -30,10 +30,27 @@ export class AuthService {
     );
   }
 
-  validarToken() {
+  validarToken(): Observable<boolean> {
     const url = `${this.baseUrl}/auth/renew`;
-    const header = new HttpHeaders().set
-    return this.http.get(url);
+    const headers = new HttpHeaders().set(
+      'x-token',
+      localStorage.getItem('token') || ''
+    );
+    return this.http.get<AuthResponse>(url, { headers }).pipe(
+      map((resp) => {
+        localStorage.setItem('token', resp.token!);
+        this._user = {
+          name: resp.name!,
+          uid: resp.uid!,
+        };
+        return resp.ok;
+      }),
+      catchError((err) => of(false))
+    );
+  }
+
+  logOut(): void {
+    localStorage.removeItem('token');
   }
 
   get usuario() {
